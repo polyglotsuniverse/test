@@ -136,12 +136,18 @@ def extract_video_info(page_url):
     
     return result
 def main():
-    START_PAGE = 11          # ← change this to where you want to continue
-    END_PAGE = 7138
+    # Read numbers from GitHub Actions, fallback to default values if running locally
+    START_PAGE = int(os.environ.get("START_PAGE", 11))
+    END_PAGE = int(os.environ.get("END_PAGE", 7138))
+    
+    print(f"Running scraper from page {START_PAGE} to {END_PAGE}")
+    
+    # Make sure your output JSON file name is dynamic so files don't overwrite
+    output_file = f"results_pages_{START_PAGE}_to_{END_PAGE}.json"
     DELAY_BETWEEN_PAGES = 0.5
     DELAY_BETWEEN_VIDEOS = 0.2
     
-    output_file = "darkegy_all.json"
+    # output_file = "darkegy_all.json"
     
     # Load existing data safely
     all_videos = []
