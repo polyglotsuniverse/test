@@ -1,44 +1,43 @@
-name: Parallel Scraper Instances 
+name: Parallel Scraper Instances
 
 on:
-workflow_dispatch:
-inputs:
-start_page:
-description: 'START_PAGE'
-required: true
-default: '1'
-end_page:
-description: 'END_PAGE'
-required: true
-default: '100' 
+  workflow_dispatch:
+    inputs:
+      start_page:
+        description: 'START_PAGE'
+        required: true
+        default: '1'
+      end_page:
+        description: 'END_PAGE'
+        required: true
+        default: '100'
 
 jobs:
-run-scraper:
-runs-on: ubuntu-latest
-steps:
-- name: Checkout repository code
-uses: actions/checkout@v4 
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
 
-* name: Set up Python
-uses: actions/setup-python@v5
-with:
-python-version: '3.10'
-* name: Install dependencies
-run: |
-if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-* name: Run Scraper Instance
-env:
-START_PAGE: ${{ github.event.inputs.start_page }}
-END_PAGE: ${{ github.event.inputs.end_page }}
-run: |
-python your_scraper_file.py
-* name: Save Results
-if: always()
-uses: actions/upload-artifact@v4
-with:
-name: data-from-page-
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-github.event.inputs.startpage−to−g i t h u b point e v e n t point i n p u t s point s t a r t sub p a g e minus t o minus
-𝑔𝑖𝑡ℎ𝑢𝑏.𝑒𝑣𝑒𝑛𝑡.𝑖𝑛𝑝𝑢𝑡𝑠.𝑠𝑡𝑎𝑟𝑡𝑝𝑎𝑔𝑒−𝑡𝑜−
-{{ github.event.inputs.end_page }}
-path: "*.json"
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Scraper Instance
+        env:
+          START_PAGE: ${{ github.event.inputs.start_page }}
+          END_PAGE: ${{ github.event.inputs.end_page }}
+        run: |
+          python your_scraper_file.py
+
+      - name: Save Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-from-page-${{ github.event.inputs.start_page }}-to-${{ github.event.inputs.end_page }}
+          path: "*.json"
