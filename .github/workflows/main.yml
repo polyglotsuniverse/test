@@ -33,7 +33,7 @@ jobs:
           START_PAGE: ${{ github.event.inputs.start_page }}
           END_PAGE: ${{ github.event.inputs.end_page }}
         run: |
-          python your_scraper_file.py
+          python scrp.py
 
       - name: Save Results
         if: always()
